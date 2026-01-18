@@ -12,20 +12,7 @@ data class Calculation(
     val billAmount: Double,
     val peopleCount: Int,
     val perPerson: Double
-) {
-    companion object {
-        fun fromId(id: String): Calculation? {
-            val parts = id.split("_")
-            if (parts.size >= 3) {
-                val amount = parts[0].toDoubleOrNull() ?: return null
-                val count = parts[1].toIntOrNull() ?: return null
-                val perPerson = amount / count
-                return Calculation(id, amount, count, perPerson)
-            }
-            return null
-        }
-    }
-}
+)
 
 class SplitViewModel : ViewModel() {
     private val _calculations = MutableStateFlow<List<Calculation>>(emptyList())
@@ -45,8 +32,7 @@ class SplitViewModel : ViewModel() {
     }
     
     fun getCalculationById(id: String): Calculation? {
-        return _calculations.value.find { it.id == id } 
-            ?: Calculation.fromId(id)
+        return _calculations.value.find { it.id == id }
     }
     
     fun saveInputValues(billAmount: String, peopleCount: String) {

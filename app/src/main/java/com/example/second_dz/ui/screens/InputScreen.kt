@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.second_dz.ui.viewmodel.Calculation
 import com.example.second_dz.ui.viewmodel.SplitViewModel
+import java.util.UUID
 
 @Composable
 fun InputScreen(
@@ -76,7 +77,7 @@ fun InputScreen(
             onClick = {
                 val amount = billAmount.toDoubleOrNull() ?: 0.0
                 val count = peopleCount.toIntOrNull() ?: 1
-                val calcId = "${amount}_${count}_${System.currentTimeMillis()}"
+                val calcId = UUID.randomUUID().toString()
                 val calculation = Calculation(calcId, amount, count, amount / count)
                 viewModel.addCalculation(calculation)
                 onCalculateClick(calcId)
