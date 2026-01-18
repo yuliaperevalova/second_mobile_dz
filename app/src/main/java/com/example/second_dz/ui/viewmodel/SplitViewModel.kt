@@ -1,11 +1,9 @@
 package com.example.second_dz.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
 
 data class Calculation(
     val id: String,
@@ -25,10 +23,8 @@ class SplitViewModel : ViewModel() {
     val lastPeopleCount: StateFlow<String> = _lastPeopleCount.asStateFlow()
     
     fun addCalculation(calculation: Calculation) {
-        viewModelScope.launch {
-            val updated = (_calculations.value + calculation).takeLast(5)
-            _calculations.value = updated
-        }
+        val updated = (_calculations.value + calculation).takeLast(5)
+        _calculations.value = updated
     }
     
     fun getCalculationById(id: String): Calculation? {
