@@ -9,12 +9,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.second_dz.ui.viewmodel.Calculation
@@ -27,16 +23,8 @@ fun InputScreen(
     onCalculateClick: (String) -> Unit,
     onHistoryClick: () -> Unit
 ) {
-    val savedBillAmount by viewModel.lastBillAmount.collectAsState()
-    val savedPeopleCount by viewModel.lastPeopleCount.collectAsState()
-    
-    var billAmount by remember { mutableStateOf("") }
-    var peopleCount by remember { mutableStateOf("") }
-    
-    LaunchedEffect(savedBillAmount, savedPeopleCount) {
-        billAmount = savedBillAmount
-        peopleCount = savedPeopleCount
-    }
+    val billAmount by viewModel.lastBillAmount.collectAsState()
+    val peopleCount by viewModel.lastPeopleCount.collectAsState()
     
     val isInputValid = billAmount.toDoubleOrNull()?.let { it > 0 } == true && 
                       peopleCount.toIntOrNull()?.let { it > 0 } == true
@@ -50,7 +38,6 @@ fun InputScreen(
         OutlinedTextField(
             value = billAmount,
             onValueChange = { newValue ->
-                billAmount = newValue
                 viewModel.saveInputValues(newValue, peopleCount)
             },
             label = { Text("Сумма счёта") },
@@ -63,7 +50,6 @@ fun InputScreen(
         OutlinedTextField(
             value = peopleCount,
             onValueChange = { newValue ->
-                peopleCount = newValue
                 viewModel.saveInputValues(billAmount, newValue)
             },
             label = { Text("Количество людей") },
