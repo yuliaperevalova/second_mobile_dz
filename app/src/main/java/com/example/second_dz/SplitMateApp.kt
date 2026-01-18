@@ -51,7 +51,9 @@ fun SplitMateApp() {
                 calcId = calcId,
                 calculation = calculation,
                 onBackToEdit = {
-                    navController.popBackStack()
+                    navController.navigate("input") {
+                        popUpTo("home") { inclusive = false }
+                    }
                 },
                 onNewCalculation = {
                     viewModel.clearInputValues()

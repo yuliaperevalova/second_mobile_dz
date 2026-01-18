@@ -37,7 +37,7 @@ fun InputScreen(
         peopleCount = savedPeopleCount
     }
     
-    val isInputValid = billAmount.toDoubleOrNull() != null && 
+    val isInputValid = billAmount.toDoubleOrNull()?.let { it > 0 } == true && 
                       peopleCount.toIntOrNull()?.let { it > 0 } == true
     
     Column(
